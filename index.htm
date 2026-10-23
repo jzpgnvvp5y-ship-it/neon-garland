@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>The first html myself</title>
+    </head>
+        <body>
+            <h1>Christmas Lights</h1>
+            <div class="lights-contaner">
+                <div class="circle active"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+            </div>
+            <div class="active"></div>
+            <button id="togglebtn">старт / стоп</button>
+            <input type="range" min="50" max="1000" value="300" id="speedRanage">
+            <script>
+                const circles = document.querySelectorAll('.circle')
+                let CurrentIndex = 0 
+                let timer = null;
+                let speed = 300;
+                const colors = ['red', 'orange', 'yellow', 'green', 'blue' , 'violet']
+                circles.forEach((circle, index) => {
+                    circle.style.backgroundColor = colors[index % colors.length];
+                });
+                const button = document.querySelector('#togglebtn');
+                const slider = document.querySelector('#speedRanage')
+                function tugnul () {
+                    if (timer === null) {
+                        timer=setInterval(switchlight, 300);
+                    } else {
+                        clearInterval(timer);
+                        timer=null;
+                    }
+                setInterval(switchLight, speed)
+                }
+                button.addEventListener('click', tugnul)
+                slider.addEventListener('input', sliderx)
+                function sliderx (event) {
+                    speed = event.target.value;
+                    if (timer != null) {
+                        clearInterval(timer)
+                        timer = setInterval(switchlight, speed);
+                    }
+                }
+                function switchlight () {
+                    circles[CurrentIndex].classList.remove('active');
+                    CurrentIndex = (CurrentIndex + 1 ) % circles.length;
+                    circles[CurrentIndex].classList.add('active');
+                }
+                </script>
+
+        </body>
+        <style>
+            body {
+                background-color: #1a1a1a;
+            }
+        .lights-contaner {
+            display: flex;
+            gap: 15px;
+            
+        }
+        .circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #333;
+            border: 2px solid #555;
+            box-shadow: 0px 0px 20px #ff0055;
+        }
+        .circle.active {
+            color: #ff0055;
+            box-shadow: 0px 0px 15px #ff0055, 0px 0px 30px #ff0055;
+            border-color: #ffffff;
+            background-color: red;
+        }
+        #togglebtn {
+            width: 150px;
+            height: 50px;
+            background-color: violet;
+            display: flex;
+            box-shadow: 0px 0px 20px #ffffff;
+        }
+        </style>
+</html>
